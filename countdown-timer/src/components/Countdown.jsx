@@ -74,6 +74,50 @@ const CountdownTimer = () => {
           {seconds.toString().padStart(2, "0")} <span>seconds</span>
         </div>
       </div>
-    )
-  }
-}
+    );
+  };
+
+  return (
+    <div className="countdown-timer-container">
+      <h2 className="countdown-name">
+        {countdownStarted ? eventName : "Countdown Timer"}
+      </h2>
+      <p className="countdown-date">
+        {countdownStarted && formatDate(eventDate)}
+      </p>
+
+      {!countdownStarted ? (
+        <form className="countdown-form">
+          <label htmlFor="title">Event Name</label>
+          <Input
+            name="title"
+            type="text"
+            placeholder="Enter event name"
+            value={eventName}
+            onChange={(e) => setEventName(e.target.value)}
+          />
+
+          <label htmlFor="date-picker">Event Date</label>
+          <input
+            name="date-picker"
+            type="date"
+            value={eventDate}
+            onChange={(e) => setEventDate(e.target.value)}
+            onClick={(e) => (e.target.type = "date")}
+          />
+          <button onClick={handleSetCountdown}>Start Countdown</button>
+        </form>
+      ) : (
+        <>
+          {formatTime(timeRemaining)}
+          <div className="control-buttons">
+            <button onClick={handleStopCountdown}>Stop</button>
+            <button onClick={handleResetCountdown}>Reset</button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default CountdownTimer;
